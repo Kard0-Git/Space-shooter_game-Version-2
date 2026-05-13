@@ -18,7 +18,6 @@ let cs_text
 function setup() {
   createCanvas(400, 400);
   player = new Player()
-  
  
     }
 
