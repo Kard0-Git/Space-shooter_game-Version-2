@@ -1,4 +1,4 @@
-class Spaceship{
+class Player{
     constructor(){
         this.x = width/2
         this.y = 300
@@ -6,10 +6,11 @@ class Spaceship{
         this.healthX = 100
         this.healthY = 14
         this.col = 'rgb(7, 141, 7)'
+        this.speed = 7
     }
  
     show(){
-        fill("black")
+        fill("lightblue")
         stroke("grey")
         rect(this.x,this.y,this.size)
     }
@@ -20,16 +21,16 @@ class Spaceship{
     }
 
     health_text(){
-        fill("black")
+        fill("white")
         text(`health: ${this.healthX}`,280,20)
     }
 
     move_left(){
-        this.x -= 5
+        this.x -= this.speed
     }
 
     move_right(){
-        this.x += 5
+        this.x += this.speed
 
     }
 //Checking for collisions between the player and the astroid

@@ -1,4 +1,4 @@
-let spaceship;
+let player;
 let bullet;
 let bullet_list = []
 let enemy_ship
@@ -12,19 +12,20 @@ let enemy_bullet
 let enemy_bullet_list = []
 let hs_storage
 let get_hs
+let hs_text
+let cs_text
 
 function setup() {
   createCanvas(400, 400);
-  spaceship = new Spaceship()
+  player = new Player()
   
-
  
     }
 
 function keyPressed(){
   // function to shoot the bullets, changing the origin to the spaceships x position
   if( key === ' '){
-    bullet = new Bullet(spaceship.x,250,25)
+    bullet = new Bullet(player.x,250,25)
     bullet_list.push(bullet)
   }
 }
@@ -32,10 +33,10 @@ function keyPressed(){
 function draw() {
 
   if(gameover == false){
-     background(220);
-    spaceship.show()
-    spaceship.show_health()
-    spaceship.health_text()
+     background(0);
+    player.show()
+    player.show_health()
+    player.health_text()
     frameRate(60)
 
   for(bullet of bullet_list){
@@ -63,9 +64,11 @@ function draw() {
   player_controls()
   GameOver()
 
+  
   text(`Score: ${current_score}`,0,70)
   text(`high score ${high_score}`,0,100)
   textSize(20)
+  
 
 
 } // draw loopb end
@@ -115,7 +118,6 @@ function main_game_logic(){
  if(localStorage){
        localStorage.setItem("high_score", JSON.stringify(high_score))
        
-
         }
 
 }
@@ -141,34 +143,39 @@ function spawn_enem_bullet(){
 
 function player_gets_hit(){
   for(let i = 0; i<enemy_bullet_list.length; i++){
-      if(enemy_bullet_list[i].hits(spaceship)){
+      if(enemy_bullet_list[i].hits(player)){
         
-        spaceship.healthX -= 5
+        player.healthX -= 5
 
-        if(spaceship.healthX <= 75){
-          spaceship.col = 'rgb(14, 194, 14)'
+        if(player.healthX <= 75){
+          player.col = 'rgb(14, 194, 14)'
         }
 
-        if(spaceship.healthX <= 50){
-          spaceship.col = 'rgb(204, 223, 36)'
+        if(player.healthX <= 50){
+          player.col = 'rgb(204, 223, 36)'
         }
 
-        if(spaceship.healthX <= 30){
-          spaceship.col = 'rgb(202, 173, 9)'
+        if(player.healthX <= 30){
+          player.col = 'rgb(202, 173, 9)'
         }
 
-        if(spaceship.healthX <= 15){
-          spaceship.col = 'rgb(209, 45, 4)'
+        if(player.healthX <= 15){
+          player.col = 'rgb(209, 45, 4)'
         }
 
-        if (spaceship.healthX <= 0){
-          spaceship.healthX = 0;
+        if (player.healthX <= 0){
+          player.healthX = 0;
           gameover = true
+
           text(`Game Over:`,width/2 - 40,height/2)
           text(`Astroids destoyed: ${current_score/score_incriment}`,width/2-75,height - 150)
           //text(`high score ${current_high_score}`,width/2-80, height - 300)
 
         }
+
+        enemy_bullet_list.splice(i,1)
+        break
+
 
       }
       
@@ -178,22 +185,25 @@ function player_gets_hit(){
 
 function player_controls(){
    if(keyIsDown(65) === true){
-    spaceship.move_left()
+    player.move_left()
   }
   if(keyIsDown(68) === true){
-    spaceship.move_right()
+    player.move_right()
   }
 }
 
 function GameOver(){
+ 
    for(let i = 0; i<enemy_ship_list.length; i++){
       if(enemy_ship_list[i].y >= width - 40){
         gameover = true
+        fill("white")
         text(`Game Over:`,width/2 - 40,height/2)
         text(`Astroids destoyed: ${current_score/score_incriment}`,width/2-75,height - 150)
         //text(`high score ${current_high_score}`,width/2-80, height - 300)
     }
   }
+
 }
 
 

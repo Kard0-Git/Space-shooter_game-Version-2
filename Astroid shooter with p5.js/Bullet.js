@@ -7,7 +7,7 @@ class Bullet{
     }
 
     show(){
-        fill("black")
+        fill("white")
         circle(this.x,this.y,this.r)
     }
 

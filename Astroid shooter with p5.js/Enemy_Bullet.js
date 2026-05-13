@@ -7,8 +7,10 @@ class Enemy_Bullet{
     }
 
     show(){
+        push()
         fill("red")
         circle(this.x,this.y,this.r)
+        pop()
     }
 
     move(){

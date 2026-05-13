@@ -8,9 +8,11 @@ class Enemy_ship{
     }
 
     show(){
-        fill("red")
+        push()
+        fill("grey")
         stroke("lightgrey")
         rect(this.x,this.y,this.s)
+        pop()
     }
 
     move(){
